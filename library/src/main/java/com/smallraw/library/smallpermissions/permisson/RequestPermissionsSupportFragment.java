@@ -39,8 +39,18 @@ public class RequestPermissionsSupportFragment extends Fragment implements IPerm
                         }
                     });
                 } else {
-                    mPermissionsHandler.addPermissionCallback(requestCode, callback);
-                    requestPermissions(permission, requestCode);
+                    try {
+                        mPermissionsHandler.addPermissionCallback(requestCode, callback);
+                        requestPermissions(permission, requestCode);
+                    } catch (Exception e) {
+                        mMainExecutor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.onPermissionGranted();
+                            }
+                        });
+                        mPermissionsHandler.removePermissionCallback(requestCode);
+                    }
                 }
             }
         });

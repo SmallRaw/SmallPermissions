@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;

@@ -36,8 +36,18 @@ public class RequestPermissionsFragment extends Fragment implements IPermission 
                         }
                     });
                 } else {
-                    mPermissionsHandler.addPermissionCallback(requestCode, callback);
-                    requestPermissions(permission, requestCode);
+                    try {
+                        mPermissionsHandler.addPermissionCallback(requestCode, callback);
+                        requestPermissions(permission, requestCode);
+                    } catch (Exception e) {
+                        mMainExecutor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.onPermissionGranted();
+                            }
+                        });
+                        mPermissionsHandler.removePermissionCallback(requestCode);
+                    }
                 }
             }
         });
@@ -58,7 +68,7 @@ public class RequestPermissionsFragment extends Fragment implements IPermission 
     public void onDestroy() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             mEnginePermission.quitSafely();
-        }else{
+        } else {
             mEnginePermission.removeAllMessage();
             mEnginePermission.quit();
         }
