@@ -1,4 +1,4 @@
-package com.smallraw.library;
+package com.smallraw.library.smallpermissions;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

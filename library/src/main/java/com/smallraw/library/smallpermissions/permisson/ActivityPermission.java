@@ -9,7 +9,8 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.smallraw.library.IPermissionsAidlCallback;
+
+import com.smallraw.library.smallpermissions.IPermissionsAidlCallback;
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
 
 import java.io.Serializable;

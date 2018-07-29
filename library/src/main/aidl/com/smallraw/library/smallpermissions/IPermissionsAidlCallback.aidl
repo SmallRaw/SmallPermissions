@@ -1,5 +1,5 @@
 // IPermissionsAidlCallback.aidl
-package com.smallraw.library;
+package com.smallraw.library.smallpermissions;
 
 // Declare any non-default types here with import statements
 

@@ -1,4 +1,4 @@
-package com.smallraw.library;
+package com.smallraw.library.permissions.annotation;
 
 import org.junit.Test;
 

@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.smallraw.library">
+    package="com.smallraw.library.smallpermissions">
 
     <application android:allowBackup="true">
         <activity
-            android:name=".smallpermissions.permisson.RequestPermissionsActivity"
+            android:name=".permisson.RequestPermissionsActivity"
             android:theme="@style/SmallRawRequestPermissionsActivityStyle" />
     </application>
 </manifest>

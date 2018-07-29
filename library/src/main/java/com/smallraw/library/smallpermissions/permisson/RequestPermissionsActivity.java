@@ -13,8 +13,8 @@ import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.smallraw.library.IPermissionsAidlCallback;
-import com.smallraw.library.R;
+
+import com.smallraw.library.smallpermissions.IPermissionsAidlCallback;
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
 import com.smallraw.library.smallpermissions.handler.PermissionsHandler;
 
