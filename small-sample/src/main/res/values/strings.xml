@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SmallPermissions</string>
+    <string name="app_hint">测试请求权限失败</string>
+</resources>
