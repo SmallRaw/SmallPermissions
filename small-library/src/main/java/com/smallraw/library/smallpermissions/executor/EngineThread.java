@@ -1,4 +1,4 @@
-package com.smallraw.library.smallpermissions.handler;
+package com.smallraw.library.smallpermissions.executor;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,12 +11,12 @@ import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class EnginePermission extends HandlerThread implements Handler.Callback {
+public class EngineThread extends HandlerThread implements Handler.Callback {
     private static final int LOOP_MESSAGE = 1;
     private final Queue<Runnable> mRunnableQueue = new LinkedList<>();
     Handler mHandler;
 
-    public EnginePermission() {
+    public EngineThread() {
         super("request permission");
     }
 

@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/get_location_permission"
-        android:text="获得定位权限"
+        android:text="获得拍照权限"
         android:onClick="onClick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

@@ -35,13 +35,11 @@ public class ActivityPermission implements IPermission {
             @Override
             public void onPermissionGranted() throws RemoteException {
                 callback.onPermissionGranted();
-                Log.e("==activity==", "onPermissionGranted");
             }
 
             @Override
             public void onPermissionDenied(List<String> Permissions) throws RemoteException {
                 callback.onPermissionDenied(Permissions);
-                Log.e("==activity==", "onPermissionDenied");
             }
         };
 

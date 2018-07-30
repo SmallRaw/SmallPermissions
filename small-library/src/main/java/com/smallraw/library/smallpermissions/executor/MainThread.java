@@ -1,10 +1,9 @@
-package com.smallraw.library.smallpermissions.thread;
+package com.smallraw.library.smallpermissions.executor;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
-import java.util.concurrent.Exchanger;
 import java.util.concurrent.Executor;
 
 public class MainThread implements Executor {

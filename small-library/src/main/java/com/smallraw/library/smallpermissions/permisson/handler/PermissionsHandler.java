@@ -1,4 +1,4 @@
-package com.smallraw.library.smallpermissions.handler;
+package com.smallraw.library.smallpermissions.permisson.handler;
 
 import android.app.AppOpsManager;
 import android.content.Context;
@@ -11,12 +11,13 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
-import com.smallraw.library.smallpermissions.thread.MainThread;
+import com.smallraw.library.smallpermissions.permisson.check.ICheckPermissions;
+import com.smallraw.library.smallpermissions.permisson.check.NormalCheckPermissions;
+import com.smallraw.library.smallpermissions.permisson.check.XiaomiCheckPermissions;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 public class PermissionsHandler {
     private final SparseArray<PermissionsCallback> mCallbackList = new SparseArray<>();
@@ -63,46 +64,31 @@ public class PermissionsHandler {
         }
     }
 
+    /**
+     * 检察权限
+     *
+     * @param context
+     * @param permissions 准备请求的权限
+     * @return 返回需要获取权限的权限
+     */
     public String[] checkPermissions(Context context, String[] permissions) {
+        ICheckPermissions checkPermissions = getCheckPermission(context);
+
         ArrayList<String> permissionList = new ArrayList<>();
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(context, permission) != PackageManager
-                    .PERMISSION_GRANTED) {
+            if (!checkPermissions.checkPermissions(context, permission)) {
                 permissionList.add(permission);
             }
         }
         return permissionList.toArray(new String[permissionList.size()]);
     }
 
-    public boolean checkPermissionsOps(Context context, String permission) {
-        String permissionToOp = AppOpsManagerCompat.permissionToOp(permission);
-        if (permissionToOp == null) {
-            // 不支持的权限，或者是normal permission
-            return true;
+    private ICheckPermissions getCheckPermission(Context context) {
+        switch (Build.MANUFACTURER) {
+            case "Xiaomi":
+                return new XiaomiCheckPermissions();
+            default:
+                return new NormalCheckPermissions();
         }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        int noteOp = AppOpsManagerCompat.noteOp(context, permissionToOp, android.os.Process.myUid(), context.getPackageName());
-        // AppOpsManagerCompat 与 checkSelfPermission都检测过则表明权限被开启
-        return noteOp == AppOpsManagerCompat.MODE_ALLOWED && ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
-//        } else {
-//            checkPermissionsNoteOp(context,)
-//        }
-    }
-
-    public static boolean checkPermissionsNoteOp(Context context, int op) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            AppOpsManager appOpsManager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-            if (appOpsManager != null) {
-                try {
-                    Method method = AppOpsManager.class.getDeclaredMethod("noteOp", Integer.TYPE, Integer.TYPE,
-                            String.class);
-                    int noteOp = (int) method.invoke(appOpsManager, op, android.os.Process.myUid(), context.getPackageName());
-                    return noteOp == AppOpsManager.MODE_ALLOWED;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return false;
     }
 }

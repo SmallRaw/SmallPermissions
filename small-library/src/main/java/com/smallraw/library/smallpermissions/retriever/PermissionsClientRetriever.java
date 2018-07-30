@@ -118,7 +118,7 @@ public class PermissionsClientRetriever implements Handler.Callback {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private static void assertNotDestroyed(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && activity.isDestroyed()) {
+        if (activity.isDestroyed()) {
             throw new IllegalArgumentException("You cannot start a load for a destroyed activity");
         }
     }

@@ -34,7 +34,6 @@ public class PermissionsApplyAspect {
 
     @Around("executionAspectJ()")
     public void aroundAspectJ(final ProceedingJoinPoint joinPoint) throws Throwable {
-        Log.e("====", "===权限申请===");
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Object o = joinPoint.getThis();
@@ -62,7 +61,7 @@ public class PermissionsApplyAspect {
         final int hint = aspectJAnnotation.hint();
 
         Log.e("====", "===权限申请===");
-        SmallPermission.requestPermission(null, permissions, 1, new PermissionsCallback() {
+        SmallPermission.requestPermission(o, permissions, 1, new PermissionsCallback() {
             @Override
             public void onPermissionGranted() {
                 try {

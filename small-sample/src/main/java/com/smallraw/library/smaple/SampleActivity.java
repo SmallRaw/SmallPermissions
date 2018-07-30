@@ -2,7 +2,9 @@ package com.smallraw.library.smaple;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,10 +29,14 @@ public class SampleActivity extends Activity {
     }
 
     @PermissionsApply(
-            permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+            permissions = {Manifest.permission.CAMERA},
             hint = R.string.app_hint, openSetting = false)
-    private static void getLocationPermission() {
-        Toast.makeText(SmallPermission.getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
+    private void getLocationPermission() {
+        Toast.makeText(this, "成功", Toast.LENGTH_SHORT).show();
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(cameraIntent);
+        }
 //        SmallPermission.requestPermission(this,
 //                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
 //                123,

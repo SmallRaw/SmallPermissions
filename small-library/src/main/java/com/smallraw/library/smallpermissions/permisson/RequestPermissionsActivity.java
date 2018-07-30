@@ -1,14 +1,11 @@
 package com.smallraw.library.smallpermissions.permisson;
 
-import android.os.Binder;
 import android.os.Build;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,7 +13,7 @@ import android.view.WindowManager;
 
 import com.smallraw.library.smallpermissions.IPermissionsAidlCallback;
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
-import com.smallraw.library.smallpermissions.handler.PermissionsHandler;
+import com.smallraw.library.smallpermissions.permisson.handler.PermissionsHandler;
 
 import java.util.List;
 
@@ -71,16 +68,17 @@ public class RequestPermissionsActivity extends AppCompatActivity implements IPe
         String[] permission = mPermissionsHandler.checkPermissions(this, permissions);
         if (permission.length == 0) {
             callback.onPermissionGranted();
-            finish();
         } else {
             try {
                 mPermissionsHandler.addPermissionCallback(requestCode, callback);
                 requestPermissions(permission, requestCode);
-            } catch (Exception e) {
+            } catch (NoSuchMethodError e) {
+                e.printStackTrace();
                 callback.onPermissionGranted();
                 mPermissionsHandler.removePermissionCallback(requestCode);
             }
         }
+        finish();
     }
 
     @Override
