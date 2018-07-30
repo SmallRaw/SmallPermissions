@@ -1,17 +1,15 @@
-package com.smallraw.library.smallpermissions.supprot.check;
+package com.smallraw.library.smallpermissions.supprot.checkPermission;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v4.content.ContextCompat;
 
-import com.smallraw.library.smallpermissions.supprot.AppOp;
-
 /**
  * @author QuincySx
  * @date 2018/7/30 下午2:22
  */
-public class AppOpPermissionsCheck implements IPermissionsCheck {
+public class XiaomiPermissionsCheck implements IPermissionsCheck {
     @Override
     public boolean checkPermissions(Context context, String permission) {
         boolean normalCheck = ContextCompat.checkSelfPermission(context, permission) == PackageManager
@@ -21,7 +19,8 @@ public class AppOpPermissionsCheck implements IPermissionsCheck {
         if (permissionToOp == null) {
             return normalCheck;
         }
-        boolean appOpsCheck = AppOp.isPermissionGranted(context, permission);
+        int noteOp = AppOpsManagerCompat.noteOp(context, permissionToOp, android.os.Process.myUid(), context.getPackageName());
+        boolean appOpsCheck = noteOp == AppOpsManagerCompat.MODE_ALLOWED;
         CheckLog.print("OPS 权限:" + appOpsCheck + " permission:" + permission);
 
         boolean check = normalCheck && appOpsCheck;

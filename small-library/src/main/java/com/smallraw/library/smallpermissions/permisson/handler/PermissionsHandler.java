@@ -7,9 +7,9 @@ import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
-import com.smallraw.library.smallpermissions.supprot.check.IPermissionsCheck;
-import com.smallraw.library.smallpermissions.supprot.check.NormalPermissionsCheck;
-import com.smallraw.library.smallpermissions.supprot.check.XiaomiPermissionsCheck;
+import com.smallraw.library.smallpermissions.supprot.checkPermission.IPermissionsCheck;
+import com.smallraw.library.smallpermissions.supprot.checkPermission.NormalPermissionsCheck;
+import com.smallraw.library.smallpermissions.supprot.checkPermission.XiaomiPermissionsCheck;
 
 import java.util.ArrayList;
 import java.util.List;
