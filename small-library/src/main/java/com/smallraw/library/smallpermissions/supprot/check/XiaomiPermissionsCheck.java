@@ -1,4 +1,4 @@
-package com.smallraw.library.smallpermissions.permisson.check;
+package com.smallraw.library.smallpermissions.supprot.check;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
  * @author QuincySx
  * @date 2018/7/30 下午2:22
  */
-public class XiaomiCheckPermissions implements ICheckPermissions {
+public class XiaomiPermissionsCheck implements IPermissionsCheck {
     @Override
     public boolean checkPermissions(Context context, String permission) {
         boolean normalCheck = ContextCompat.checkSelfPermission(context, permission) == PackageManager

@@ -1,4 +1,4 @@
-package com.smallraw.library.smallpermissions.permisson.check;
+package com.smallraw.library.smallpermissions.supprot.check;
 
 import android.os.Build;
 import android.util.Log;

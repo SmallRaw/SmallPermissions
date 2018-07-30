@@ -1,21 +1,16 @@
 package com.smallraw.library.smallpermissions.permisson.handler;
 
-import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.app.AppOpsManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
-import com.smallraw.library.smallpermissions.permisson.check.ICheckPermissions;
-import com.smallraw.library.smallpermissions.permisson.check.NormalCheckPermissions;
-import com.smallraw.library.smallpermissions.permisson.check.XiaomiCheckPermissions;
+import com.smallraw.library.smallpermissions.supprot.check.IPermissionsCheck;
+import com.smallraw.library.smallpermissions.supprot.check.NormalPermissionsCheck;
+import com.smallraw.library.smallpermissions.supprot.check.XiaomiPermissionsCheck;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +67,7 @@ public class PermissionsHandler {
      * @return 返回需要获取权限的权限
      */
     public String[] checkPermissions(Context context, String[] permissions) {
-        ICheckPermissions checkPermissions = getCheckPermission(context);
+        IPermissionsCheck checkPermissions = getCheckPermission(context);
 
         ArrayList<String> permissionList = new ArrayList<>();
         for (String permission : permissions) {
@@ -83,12 +78,12 @@ public class PermissionsHandler {
         return permissionList.toArray(new String[permissionList.size()]);
     }
 
-    private ICheckPermissions getCheckPermission(Context context) {
+    private IPermissionsCheck getCheckPermission(Context context) {
         switch (Build.MANUFACTURER) {
             case "Xiaomi":
-                return new XiaomiCheckPermissions();
+                return new XiaomiPermissionsCheck();
             default:
-                return new NormalCheckPermissions();
+                return new NormalPermissionsCheck();
         }
     }
 }
