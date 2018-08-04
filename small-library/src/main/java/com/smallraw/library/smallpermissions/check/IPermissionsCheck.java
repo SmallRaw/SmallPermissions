@@ -1,4 +1,4 @@
-package com.smallraw.library.smallpermissions.supprot.checkPermission;
+package com.smallraw.library.smallpermissions.check;
 
 import android.content.Context;
 
