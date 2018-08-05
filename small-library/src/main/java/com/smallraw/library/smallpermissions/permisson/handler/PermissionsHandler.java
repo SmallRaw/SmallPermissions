@@ -42,16 +42,19 @@ public class PermissionsHandler {
     PermissionsCallback permissionsCallback = getPermissionCallback(requestCode);
     if (permissionsCallback != null) {
       if (grantResults.length > 0) {
+        List<String> grantedPermission = new ArrayList<>();
         List<String> deniedPermission = new ArrayList<>();
         //判读没有授予权限的权限，并放到一个集合里
         for (int i = 0; i < grantResults.length; i++) {
           if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
             deniedPermission.add(permissions[i]);
+          } else {
+            grantedPermission.add(permissions[i]);
           }
         }
         //判断是否全部通过授权
         if (deniedPermission.isEmpty()) {
-          permissionsCallback.onPermissionGranted();
+          permissionsCallback.onPermissionGranted(grantedPermission);
         } else {
           permissionsCallback.onPermissionDenied(deniedPermission);
         }

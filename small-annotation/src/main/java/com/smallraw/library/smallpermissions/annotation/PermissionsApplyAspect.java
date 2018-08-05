@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.smallraw.library.smallpermissions.SmallPermission;
+import com.smallraw.library.smallpermissions.callback.Action;
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -61,38 +62,42 @@ public class PermissionsApplyAspect {
         final int hint = aspectJAnnotation.hint();
 
         Log.e("====", "===权限申请===");
-        SmallPermission.requestPermission(o, permissions, 1, new PermissionsCallback() {
-            @Override
-            public void onPermissionGranted() {
-                try {
-                    joinPoint.proceed();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onPermissionDenied(List<String> Permissions) {
-                Toast.makeText(context, context.getString(hint), Toast.LENGTH_SHORT).show();
-                if (aspectJAnnotation.openSetting()) {
-                    if (Permissions.get(0).equals(Manifest.permission.REQUEST_INSTALL_PACKAGES)) {
-                        Intent localIntent = new Intent();
-                        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        if (Build.VERSION.SDK_INT >= 9) {//2.3
-                            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-                            localIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
-                        } else if (Build.VERSION.SDK_INT <= 8) {//2.2
-                            localIntent.setAction(Intent.ACTION_VIEW);
-                            localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
-                            localIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
+        SmallPermission.with(o)
+                .permission(permissions)
+                .onGranted(new Action() {
+                    @Override
+                    public void onAction(List<String> Permissions) {
+                        try {
+                            joinPoint.proceed();
+                        } catch (Throwable throwable) {
+                            throwable.printStackTrace();
                         }
-                        context.startActivity(localIntent);
-                    } else {
-                        startActivity(context, new Intent(Settings.ACTION_SETTINGS));
                     }
-                }
-            }
-        });
+                })
+                .onDenied(new Action() {
+                    @Override
+                    public void onAction(List<String> Permissions) {
+                        Toast.makeText(context, context.getString(hint), Toast.LENGTH_SHORT).show();
+                        if (aspectJAnnotation.openSetting()) {
+                            if (Permissions.get(0).equals(Manifest.permission.REQUEST_INSTALL_PACKAGES)) {
+                                Intent localIntent = new Intent();
+                                localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                if (Build.VERSION.SDK_INT >= 9) {//2.3
+                                    localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                                    localIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
+                                } else if (Build.VERSION.SDK_INT <= 8) {//2.2
+                                    localIntent.setAction(Intent.ACTION_VIEW);
+                                    localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+                                    localIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
+                                }
+                                context.startActivity(localIntent);
+                            } else {
+                                startActivity(context, new Intent(Settings.ACTION_SETTINGS));
+                            }
+                        }
+                    }
+                })
+                .start();
     }
 
     private void startActivity(Context context, Intent intent) {

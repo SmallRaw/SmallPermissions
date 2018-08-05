@@ -6,8 +6,9 @@ package com.smallraw.library.smallpermissions;
 interface IPermissionsAidlCallback {
         /**
          * 正常获取了权限
+         * @param permissions 被许可的权限
          */
-        void onPermissionGranted();
+        void onPermissionGranted(out List<String> Permissions);
 
         /**
          * 有一部分权限被拒绝

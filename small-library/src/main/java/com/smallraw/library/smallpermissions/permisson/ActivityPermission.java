@@ -33,13 +33,13 @@ public class ActivityPermission implements IPermission {
 
         IPermissionsAidlCallback.Stub stub = new IPermissionsAidlCallback.Stub() {
             @Override
-            public void onPermissionGranted() throws RemoteException {
-                callback.onPermissionGranted();
+            public void onPermissionGranted(List<String> permissions) throws RemoteException {
+                callback.onPermissionGranted(permissions);
             }
 
             @Override
-            public void onPermissionDenied(List<String> Permissions) throws RemoteException {
-                callback.onPermissionDenied(Permissions);
+            public void onPermissionDenied(List<String> permissions) throws RemoteException {
+                callback.onPermissionDenied(permissions);
             }
         };
 
@@ -55,7 +55,7 @@ public class ActivityPermission implements IPermission {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void onPermissionGranted() {
+        public void onPermissionGranted(List<String> permissions) {
 
         }
 

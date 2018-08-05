@@ -14,7 +14,7 @@ public class NormalPermissionsCheck implements IPermissionsCheck {
   public boolean checkPermissions(Context context, String permission) {
     boolean check = ContextCompat.checkSelfPermission(context, permission) == PackageManager
             .PERMISSION_GRANTED;
-    CheckLog.print("权限:" + check + " permission:" + permission);
+    CheckLog.print("API 权限:" + check + " permission:" + permission);
 
     String permissionToOp = AppOpsManagerCompat.permissionToOp(permission);
     if (permissionToOp == null) {

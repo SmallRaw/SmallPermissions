@@ -9,6 +9,7 @@ import com.smallraw.library.smallpermissions.check.actualTest.CallLogReadTest;
 import com.smallraw.library.smallpermissions.check.actualTest.CallLogWriteTest;
 import com.smallraw.library.smallpermissions.check.actualTest.CameraTest;
 import com.smallraw.library.smallpermissions.check.actualTest.ContactsReadTest;
+import com.smallraw.library.smallpermissions.check.actualTest.ContactsWriteTest;
 import com.smallraw.library.smallpermissions.check.actualTest.LocationAccessCoarseTest;
 import com.smallraw.library.smallpermissions.check.actualTest.LocationAccessFineTest;
 import com.smallraw.library.smallpermissions.check.actualTest.PhoneReadState;
@@ -18,6 +19,7 @@ import com.smallraw.library.smallpermissions.check.actualTest.SipTest;
 import com.smallraw.library.smallpermissions.check.actualTest.SmsReadTest;
 import com.smallraw.library.smallpermissions.check.actualTest.StorageReadTest;
 import com.smallraw.library.smallpermissions.check.actualTest.StorageWriteTest;
+import com.smallraw.library.smallpermissions.check.actualTest.VoicemailAddTest;
 
 /**
  * @author QuincySx
@@ -26,6 +28,8 @@ import com.smallraw.library.smallpermissions.check.actualTest.StorageWriteTest;
 public class ActualPermissionsCheck implements IPermissionsCheck {
   @Override
   public boolean checkPermissions(Context context, String permission) {
+    long startTime = System.currentTimeMillis();
+
     context = context.getApplicationContext();
 
     boolean checkPermission = false;
@@ -112,8 +116,9 @@ public class ActualPermissionsCheck implements IPermissionsCheck {
       default:
         checkPermission = true;
     }
-    CheckLog.print("权限:" + checkPermission + " permission:" + permission);
+    long endTime = System.currentTimeMillis();
 
+    CheckLog.print("ActualPermissionsCheck :" + checkPermission + " permission:" + permission + " time:" + (endTime - startTime)+"ms");
     return checkPermission;
   }
 
@@ -155,7 +160,7 @@ public class ActualPermissionsCheck implements IPermissionsCheck {
 
   private boolean checkWriteContacts(Context context) {
     try {
-      return new ContactsReadTest(context).test();
+      return new ContactsWriteTest(context).test();
     } catch (Throwable throwable) {
       throwable.printStackTrace();
     }
@@ -218,7 +223,7 @@ public class ActualPermissionsCheck implements IPermissionsCheck {
 
   private boolean checkVoicemailAdd(Context context) {
     try {
-      return new CallLogWriteTest(context).test();
+      return new VoicemailAddTest(context).test();
     } catch (Throwable throwable) {
       throwable.printStackTrace();
     }
