@@ -1,9 +1,11 @@
 package com.smallraw.library.smallpermissions.permisson.handler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.SparseArray;
 
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
@@ -38,7 +40,7 @@ public class PermissionsHandler {
     return mCallbackList.get(key);
   }
 
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+  public void onRequestPermissionsResult(Activity activity, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     PermissionsCallback permissionsCallback = getPermissionCallback(requestCode);
     if (permissionsCallback != null) {
       if (grantResults.length > 0) {
@@ -46,8 +48,14 @@ public class PermissionsHandler {
         List<String> deniedPermission = new ArrayList<>();
         //判读没有授予权限的权限，并放到一个集合里
         for (int i = 0; i < grantResults.length; i++) {
+          boolean isTip = ActivityCompat.shouldShowRequestPermissionRationale(activity, permissions[i]);
           if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
             deniedPermission.add(permissions[i]);
+            if (isTip) {//表明用户没有彻底禁止弹出权限请求
+              // requestPermission(PermissionHelper.getInstance().filterPermissions(permissions));
+            } else {//表明用户已经彻底禁止弹出权限请求
+              // PermissionMonitorService.start(this);//这里一般会提示用户进入权限设置界面
+            }
           } else {
             grantedPermission.add(permissions[i]);
           }
