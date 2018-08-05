@@ -21,24 +21,25 @@ public void test(){
 #### 用法二
 调用方法,
 ```
-//参数一 Object:传入 Context、Fragment、Activity、Dialog 等，如果获取不到这些对象可以传 null
-//参数二 String[]:需要获取的权限
-//参数三 int:请求码
-//参数四 callback:回调接口
-SmallPermission.requestPermission(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                123,
-                new PermissionsCallback() {
-                    @Override
-                    public void onPermissionGranted() {
-                        Toast.makeText(SampleActivity.this, "成功", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onPermissionDenied(List<String> Permissions) {
-                        Toast.makeText(SampleActivity.this, "失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//with 参数 Object:传入 Context、Fragment、Activity、Dialog 等，如果获取不到这些对象可以传 null
+//permission 参数 String[]:需要获取的权限
+//onGranted 参数 Action:成功回调
+//onDenied 参数 Action:失败回调
+ SmallPermission.with(this)
+            .permission(permissions)
+            .onGranted(new Action() {
+              @Override
+              public void onAction(List<String> Permissions) {
+                Toast.makeText(SampleActivity.this, "成功", Toast.LENGTH_SHORT).show();
+              }
+            })
+            .onDenied(new Action() {
+              @Override
+              public void onAction(List<String> Permissions) {
+                Toast.makeText(SampleActivity.this, "失败", Toast.LENGTH_SHORT).show();
+              }
+            })
+            .start();
 ```
 
 ### Todo List
