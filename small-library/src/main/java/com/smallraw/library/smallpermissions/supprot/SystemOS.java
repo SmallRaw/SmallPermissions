@@ -1,7 +1,7 @@
 package com.smallraw.library.smallpermissions.supprot;
 
 import android.os.Build;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 /**
  * @author QuincySx

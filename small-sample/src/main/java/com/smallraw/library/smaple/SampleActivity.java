@@ -2,17 +2,13 @@ package com.smallraw.library.smaple;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
 
 import com.smallraw.library.smallpermissions.SmallPermission;
-import com.smallraw.library.smallpermissions.annotation.PermissionsApply;
 import com.smallraw.library.smallpermissions.callback.Action;
-import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
 
 import java.util.List;
 

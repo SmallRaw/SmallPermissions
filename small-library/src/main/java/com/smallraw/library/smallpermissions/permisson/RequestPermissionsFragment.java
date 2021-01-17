@@ -3,17 +3,15 @@ package com.smallraw.library.smallpermissions.permisson;
 import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
 import com.smallraw.library.smallpermissions.executor.EngineThread;
 import com.smallraw.library.smallpermissions.permisson.handler.PermissionsHandler;
 import com.smallraw.library.smallpermissions.executor.MainThread;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.concurrent.Executor;
 
 public class RequestPermissionsFragment extends Fragment implements IPermission {
@@ -61,7 +59,7 @@ public class RequestPermissionsFragment extends Fragment implements IPermission 
 
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    mPermissionsHandler.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    mPermissionsHandler.onRequestPermissionsResult(getActivity(),requestCode, permissions, grantResults);
   }
 
   @Override

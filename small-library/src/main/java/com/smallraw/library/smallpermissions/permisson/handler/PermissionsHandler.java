@@ -3,16 +3,14 @@ package com.smallraw.library.smallpermissions.permisson.handler;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import android.util.SparseArray;
 
 import com.smallraw.library.smallpermissions.callback.PermissionsCallback;
 import com.smallraw.library.smallpermissions.check.DoublePermissionsCheck;
 import com.smallraw.library.smallpermissions.check.IPermissionsCheck;
 import com.smallraw.library.smallpermissions.check.NormalPermissionsCheck;
-import com.smallraw.library.smallpermissions.check.ActualPermissionsCheck;
 
 import java.util.ArrayList;
 import java.util.List;

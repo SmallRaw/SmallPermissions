@@ -1,1 +1,1 @@
-include ':small-sample', ':small-library', ':buildSrc', ':small-annotation'
+include ':small-sample', ':small-library'

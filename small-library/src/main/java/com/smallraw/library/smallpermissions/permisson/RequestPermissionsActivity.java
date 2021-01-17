@@ -2,9 +2,9 @@ package com.smallraw.library.smallpermissions.permisson;
 
 import android.os.Build;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Window;
@@ -84,7 +84,7 @@ public class RequestPermissionsActivity extends AppCompatActivity implements IPe
 
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    mPermissionsHandler.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    mPermissionsHandler.onRequestPermissionsResult(this,requestCode, permissions, grantResults);
     finish();
   }
 }
